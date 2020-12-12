@@ -13,3 +13,45 @@
  *= require_tree .
  *= require_self
  */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');  
+
+:root {
+  --blue: #0068CD;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  background-color: #F9FCFF;
+}
+
+.app-title {
+  border-radius: 0 20px 20px 0;
+  background-color: var(--blue);
+  color: white;
+  display: inline-block;
+  min-width: 300px;
+  margin-top: 60px;
+  padding: 10px 50px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 40px;
+}
+
+input[type="text"] {
+  font-family: 'Nunito', sans-serif;
+  padding: 5px;
+}
+
+input[type="submit"], button {
+  font-family: 'Nunito', sans-serif;
+  margin-left: 10px;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--blue);
+  color: white;
+}
