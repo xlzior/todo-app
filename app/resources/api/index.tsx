@@ -1,14 +1,8 @@
-export const getTasks = async () => {
-  const response = await fetch("/api/tasks");
-  const { data } = await response.json();
-  return data;
-}
+const getJsonData = response => response.json().then(({ data }) => data);
 
-export const getTask = async (id: number) => {
-  const response = await fetch(`/api/tasks/${id}`);
-  const { data } = await response.json();
-  return data;
-}
+export const getTasks = () => fetch('/api/tasks').then(getJsonData);
+
+export const getTask = (id: number) => fetch(`/api/tasks/${id}`).then(getJsonData);
 
 const getToken = () => document.querySelector("meta[name=csrf-token]").textContent;
 
@@ -21,13 +15,13 @@ export const addTask = (data) => {
       "X-CSRF-Token": getToken()
     },
     body: JSON.stringify({ data })
-  })
+  }).then(getJsonData);
 }
 
 export const deleteTask = (id: number) => {
   return fetch(`/api/tasks/${id}`, {
     method: "DELETE",
-  })
+  }).then(() => { id });
 }
 
 const updateTask = (data) => {
@@ -39,10 +33,10 @@ const updateTask = (data) => {
       "X-CSRF-Token": getToken()
     },
     body: JSON.stringify({ data }),
-  });
+  }).then(getJsonData);
 }
 
-export const updateName = ({id, type}, newName: string) => {
+export const updateName = ({ task: {id, type}, newName }) => {
   return updateTask({
     id,
     type,

@@ -1,13 +1,16 @@
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { HiTrash } from 'react-icons/hi';
-import { toggleComplete, updateName, deleteTask } from '../../../resources/api';
+
+import { toggleCompleteThunk, updateNameThunk, deleteTaskThunk } from './tasksSlice';
 
 export default function Task({ task, isEdit, setEdit }) {
+  const dispatch = useDispatch();
   const { attributes, id } = task;
   const [newName, setNewName] = React.useState(attributes.task);
-  const handleSubmit = event => {
+  const handleEdit = event => {
     event.preventDefault();
-    updateName(task, newName);
+    dispatch(updateNameThunk({ task, newName }));
     setEdit(-1);
   }
   return (
@@ -16,10 +19,10 @@ export default function Task({ task, isEdit, setEdit }) {
         type="checkbox"
         name={attributes.task}
         checked={attributes.completed}
-        onChange={() => toggleComplete(task)}
+        onChange={() => dispatch(toggleCompleteThunk(task))}
       />
       { isEdit
-        ? <form onSubmit={handleSubmit}>
+        ? <form onSubmit={handleEdit}>
             <input
               type="text"
               value={newName}
@@ -30,7 +33,7 @@ export default function Task({ task, isEdit, setEdit }) {
         : <label htmlFor={attributes.task} onClick={() => setEdit(id)}>
             <span>{attributes.task}</span>
           </label> }
-      <HiTrash className="delete" onClick={() => deleteTask(id)} />
+      <HiTrash className="delete" onClick={() => dispatch(deleteTaskThunk(id))} />
     </div>
   );
 }

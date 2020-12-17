@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import TaskList from './TaskList';
-import { getTasks } from '../../../resources/api';
+import { tasksSelector, taskStatusSelector, getTasksThunk } from './tasksSlice';
 
 import './index.css';
 
@@ -11,10 +12,15 @@ interface Task {
 }
 
 export default function Tasks() {
-  const [tasks, setTasks] = React.useState<Task[]>([]);
+  const dispatch = useDispatch();
+  const tasks = useSelector(tasksSelector);
+  const taskStatus = useSelector(taskStatusSelector);
+
   React.useEffect(() => {
-    getTasks().then(setTasks);
-  }, []);
+    if (taskStatus === 'idle') {
+      dispatch(getTasksThunk());
+    }
+  }, [taskStatus, dispatch]);
   return (
     <div className="App">
       <div className="app-title">
