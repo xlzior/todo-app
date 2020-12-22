@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getTasks, addTask, toggleComplete, updateName, deleteTask } from "../../../resources/api";
+import { getTasks, addTask, toggleComplete, updateName, deleteTask } from "../../../resources/api/tasks";
 
 // thunks
 export const getTasksThunk = createAsyncThunk('tasks/getTasks', getTasks);
@@ -28,6 +28,7 @@ export const taskSlice = createSlice({
   },
   reducers: {},
   extraReducers: builder => {
+    // read tasks
     builder.addCase(getTasksThunk.pending, (state, action) => {
       state.status = LOADING;
     });
@@ -39,12 +40,18 @@ export const taskSlice = createSlice({
       state.status = ERROR;
       state.error = action.error.message;
     });
+
+    // create task
     builder.addCase(addTaskThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       state.data.push(action.payload);
     });
+
+    // update task
     builder.addCase(toggleCompleteThunk.fulfilled, updateTask);
     builder.addCase(updateNameThunk.fulfilled, updateTask);
+
+    // delete task
     builder.addCase(deleteTaskThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       const i = state.data.findIndex(task => task.id === action.meta.arg);

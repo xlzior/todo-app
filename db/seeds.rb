@@ -6,6 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Task.create(task: "Learn React", completed: true)
-Task.create(task: "Learn TypeScript", completed: false)
-Task.create(task: "Learn Ruby", completed: false)
+react = Task.create(task: "Learn React", completed: true)
+typescript = Task.create(task: "Learn TypeScript", completed: false)
+ruby = Task.create(task: "Learn Ruby", completed: false)
+
+cs_tag = Tag.create(name: "CS")
+cvwo_tag = Tag.create(name: "CVWO")
+
+react.tags.create!(name: "CS")
