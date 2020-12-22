@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { HiPlus } from 'react-icons/hi';
 
-import { addTaskThunk } from './tasksSlice';
+import { createTaskThunk } from './tasksSlice';
 
 export default function AddTask() {
   const [isAdd, setAdd] = React.useState(false);
@@ -11,7 +11,7 @@ export default function AddTask() {
   const handleSubmit = event => {
     event.preventDefault();
     if (newTask.length > 0) {
-      dispatch(addTaskThunk({
+      dispatch(createTaskThunk({
         type: "tasks",
         attributes: { task: newTask, completed: false }
       }));

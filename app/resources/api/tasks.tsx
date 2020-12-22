@@ -1,12 +1,10 @@
-const getJsonData = response => response.json().then(({ data }) => data);
+import { getJsonData, getToken } from './utils';
 
-export const getTasks = () => fetch('/api/tasks').then(getJsonData);
+export const readTasks = () => fetch('/api/tasks').then(getJsonData);
 
-export const getTask = (id: number) => fetch(`/api/tasks/${id}`).then(getJsonData);
+export const readTask = (id: number) => fetch(`/api/tasks/${id}`).then(getJsonData);
 
-const getToken = () => document.querySelector("meta[name=csrf-token]").textContent;
-
-export const addTask = (data) => {
+export const createTask = (data) => {
   return fetch("/api/tasks", {
     method: "POST",
     credentials: "include",
@@ -16,12 +14,6 @@ export const addTask = (data) => {
     },
     body: JSON.stringify({ data })
   }).then(getJsonData);
-}
-
-export const deleteTask = (id: number) => {
-  return fetch(`/api/tasks/${id}`, {
-    method: "DELETE",
-  }).then(() => { id });
 }
 
 const updateTask = (data) => {
@@ -50,4 +42,10 @@ export const toggleComplete = ({ id, type, attributes }) => {
     type,
     attributes: { completed: !attributes.completed },
   });
+}
+
+export const deleteTask = (id: number) => {
+  return fetch(`/api/tasks/${id}`, {
+    method: "DELETE",
+  }).then(() => { id });
 }

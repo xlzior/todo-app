@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getTasks, addTask, toggleComplete, updateName, deleteTask } from "../../../resources/api/tasks";
+import { readTasks, createTask, toggleComplete, updateName, deleteTask } from "../../../resources/api/tasks";
 
 // thunks
-export const getTasksThunk = createAsyncThunk('tasks/getTasks', getTasks);
-export const addTaskThunk = createAsyncThunk('tasks/addTask', addTask);
+export const readTasksThunk = createAsyncThunk('tasks/readTasks', readTasks);
+export const createTaskThunk = createAsyncThunk('tasks/createTask', createTask);
 export const toggleCompleteThunk = createAsyncThunk('tasks/completeTask', toggleComplete);
 export const updateNameThunk = createAsyncThunk('tasks/updateName', updateName);
 export const deleteTaskThunk = createAsyncThunk('tasks/deleteTask', deleteTask);
@@ -28,23 +28,23 @@ export const taskSlice = createSlice({
   },
   reducers: {},
   extraReducers: builder => {
+    // create task
+    builder.addCase(createTaskThunk.fulfilled, (state, action) => {
+      state.status = SUCCESS;
+      state.data.push(action.payload);
+    });
+
     // read tasks
-    builder.addCase(getTasksThunk.pending, (state, action) => {
+    builder.addCase(readTasksThunk.pending, (state, action) => {
       state.status = LOADING;
     });
-    builder.addCase(getTasksThunk.fulfilled, (state, action) => {
+    builder.addCase(readTasksThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       state.data = state.data.concat(action.payload);
     });
-    builder.addCase(getTasksThunk.rejected, (state, action) => {
+    builder.addCase(readTasksThunk.rejected, (state, action) => {
       state.status = ERROR;
       state.error = action.error.message;
-    });
-
-    // create task
-    builder.addCase(addTaskThunk.fulfilled, (state, action) => {
-      state.status = SUCCESS;
-      state.data.push(action.payload);
     });
 
     // update task
