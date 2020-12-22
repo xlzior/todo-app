@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { readTasks, createTask, toggleComplete, updateName, deleteTask } from "../../../resources/api/tasks";
+import { SUCCESS, LOADING, ERROR } from '../sliceUtils';
 
 // thunks
 export const readTasksThunk = createAsyncThunk('tasks/readTasks', readTasks);
@@ -7,10 +8,6 @@ export const createTaskThunk = createAsyncThunk('tasks/createTask', createTask);
 export const toggleCompleteThunk = createAsyncThunk('tasks/completeTask', toggleComplete);
 export const updateNameThunk = createAsyncThunk('tasks/updateName', updateName);
 export const deleteTaskThunk = createAsyncThunk('tasks/deleteTask', deleteTask);
-
-const SUCCESS = "SUCCESS";
-const LOADING = "LOADING";
-const ERROR = "ERROR";
 
 const updateTask = (state, action) => {
   state.status = SUCCESS;
