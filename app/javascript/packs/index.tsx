@@ -3,12 +3,12 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import store from './store';
-import App from '../components/App';
+import Routes from '../components/Routes';
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <Routes />
     </Provider>,
     document.body.appendChild(document.createElement("div"))
   )

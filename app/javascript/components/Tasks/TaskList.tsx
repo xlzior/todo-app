@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Task from './Task';
 import AddTask from './AddTask';
 import { tasksSelector } from './tasksSlice';
+import './index.css';
 
 export default function TaskList() {
   const tasks = useSelector(tasksSelector)
