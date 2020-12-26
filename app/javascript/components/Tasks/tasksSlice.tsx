@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { readTasks, createTask, toggleComplete, updateName, deleteTask } from "../../../resources/api/tasks";
+import { addTagToTask, removeTagFromTask } from "../../../resources/api/tags";
 import { SUCCESS, LOADING, ERROR } from '../sliceUtils';
 
 // thunks
@@ -8,6 +9,9 @@ export const createTaskThunk = createAsyncThunk('tasks/createTask', createTask);
 export const toggleCompleteThunk = createAsyncThunk('tasks/completeTask', toggleComplete);
 export const updateNameThunk = createAsyncThunk('tasks/updateName', updateName);
 export const deleteTaskThunk = createAsyncThunk('tasks/deleteTask', deleteTask);
+
+export const addTagToTaskThunk = createAsyncThunk("tags/addTagToTask", addTagToTask);
+export const removeTagFromTaskThunk = createAsyncThunk("tags/removeTagFromTask", removeTagFromTask);
 
 const updateTask = (state, action) => {
   state.status = SUCCESS;
@@ -54,6 +58,17 @@ export const taskSlice = createSlice({
       const i = state.data.findIndex(task => task.id === action.meta.arg);
       state.data.splice(i, 1);
     });
+
+    // add new task-tag relationship
+    builder.addCase(addTagToTaskThunk.fulfilled, (state, action) => {
+      state.status = SUCCESS;
+      // TODO: update redux task's tags
+    })
+
+    builder.addCase(removeTagFromTaskThunk.fulfilled, (state, action) => {
+      state.status = SUCCESS;
+      // TODO: update redux task's tags
+    })
   }
 });
 

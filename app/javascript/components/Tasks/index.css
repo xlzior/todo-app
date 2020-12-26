@@ -17,14 +17,20 @@
   border-radius: 6px;
 }
 
-.task > .delete {
-  margin-left: 10px;
+.task > label {
+  margin-right: 10px;
+}
+
+.task > .delete,
+.task > .add-tag {
+  margin-left: 8px;
   color: #AAAAAA;
   opacity: 0;
   cursor: pointer;
 }
 
-.task:hover > .delete {
+.task:hover > .delete,
+.task:hover > .add-tag {
   opacity: 1;
 }
 
