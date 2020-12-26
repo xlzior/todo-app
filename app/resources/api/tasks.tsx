@@ -1,8 +1,8 @@
 import { getJsonData, getToken } from './utils';
 
-export const readTasks = () => fetch('/api/tasks').then(getJsonData);
+export const readTasks = () => fetch('/api/tasks?include=tags').then(getJsonData);
 
-export const readTask = (id: number) => fetch(`/api/tasks/${id}`).then(getJsonData);
+// export const readTask = (id: number) => fetch(`/api/tasks/${id}`).then(getJsonData);
 
 export const createTask = (data) => {
   return fetch("/api/tasks", {

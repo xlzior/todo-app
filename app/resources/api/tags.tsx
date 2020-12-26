@@ -4,7 +4,7 @@ import { getJsonData, getToken } from './utils';
 
 export const readTags = () => fetch('/api/tags').then(getJsonData);
 
-export const readTag = (id: number) => fetch(`/api/tags/${id}`).then(getJsonData);
+// export const readTag = (id: number) => fetch(`/api/tags/${id}`).then(getJsonData);
 
 export const createTag = (data) => {
   return fetch("/api/tags", {
@@ -45,7 +45,7 @@ export const addTagToTask = ({ taskId, tagId }) => {
   });
 }
 
-export const removeTagToTask = ({ taskId, tagId }) => {
+export const removeTagFromTask = ({ taskId, tagId }) => {
   return fetch(`/api/tasks/${taskId}/relationships/tags`, {
     method: "DELETE",
     body: JSON.stringify({ data: [{ type: "tags", id: tagId }] })

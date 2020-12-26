@@ -5,13 +5,15 @@ import {
   Route,
 } from "react-router-dom";
 
-import Tasks from './Tasks';
+import Tasks from '.';
+import TagsList from './Tags/TagsList';
 
 export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/"><Tasks /></Route>
+        <Route path="/tags"><TagsList /></Route>
+        <Route exact path="/"><Tasks /></Route>
       </Switch>
     </Router>
   )

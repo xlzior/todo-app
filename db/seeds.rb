@@ -10,7 +10,6 @@ react = Task.create(task: "Learn React", completed: true)
 typescript = Task.create(task: "Learn TypeScript", completed: false)
 ruby = Task.create(task: "Learn Ruby", completed: false)
 
-cs_tag = Tag.create(name: "CS")
 cvwo_tag = Tag.create(name: "CVWO")
 
 react.tags.create!(name: "CS")
