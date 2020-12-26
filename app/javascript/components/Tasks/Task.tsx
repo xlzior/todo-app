@@ -3,10 +3,12 @@ import { useDispatch } from 'react-redux';
 import { HiTrash } from 'react-icons/hi';
 
 import { toggleCompleteThunk, updateNameThunk, deleteTaskThunk } from './tasksSlice';
+import Tag from '../Tags/Tag';
 
 export default function Task({ task, isEdit, setEdit }) {
   const dispatch = useDispatch();
   const { attributes, id } = task;
+  const tags = task.relationships.tags.data;
   const [newName, setNewName] = React.useState(attributes.task);
   const handleEdit = event => {
     event.preventDefault();
@@ -33,6 +35,7 @@ export default function Task({ task, isEdit, setEdit }) {
         : <label htmlFor={attributes.task} onClick={() => setEdit(id)}>
             <span>{attributes.task}</span>
           </label> }
+      {tags.map(({ id }) => <Tag id={id}/>)}
       <HiTrash className="delete" onClick={() => dispatch(deleteTaskThunk(id))} />
     </div>
   );
