@@ -1,0 +1,12 @@
+.tags-panel {
+  width: 300px;
+}
+
+.tags-list {
+  padding: 0;
+}
+
+.tags-list li {
+  list-style-type: none;
+  margin-bottom: 5px;
+}

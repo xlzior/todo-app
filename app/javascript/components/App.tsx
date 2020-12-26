@@ -5,7 +5,8 @@ import TaskList from './Tasks/TaskList';
 import { taskStatusSelector, readTasksThunk } from './Tasks/tasksSlice';
 import { tagsStatusSelector, readTagsThunk } from './Tags/tagsSlice';
 
-import TagsList from './Tags/TagsList';
+import TagsPanel from './Tags/TagsPanel';
+import Page from './Page';
 
 interface Task {
   task: string,
@@ -17,6 +18,9 @@ export default function Tasks() {
   const taskStatus = useSelector(taskStatusSelector);
   const tagStatus = useSelector(tagsStatusSelector);
 
+  // const [isPanelOpen, setPanelOpen] = React.useState(false);
+  // TODO: button to hide and show tags panel
+
   React.useEffect(() => { // tasks
     if (taskStatus === 'idle') dispatch(readTasksThunk());
   }, [taskStatus, dispatch]);
@@ -26,14 +30,11 @@ export default function Tasks() {
   }, [tagStatus, dispatch]);
 
   return (
-    <div className="App">
-      <div className="app-title">
-        <h1>Tasks</h1>
-      </div>
+    <Page title="Tasks">
       <main>
         <TaskList />
-        <TagsList />
+        <TagsPanel />
       </main>
-    </div>
+    </Page>
   )
 }

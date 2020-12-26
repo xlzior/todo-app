@@ -26,7 +26,11 @@ body {
   background-color: #F9FCFF;
 }
 
-.app-title {
+main {
+  display: flex;
+}
+
+.page-title {
   border-radius: 0 20px 20px 0;
   background-color: var(--blue);
   color: white;
@@ -43,16 +47,21 @@ h1 {
 
 input[type="text"] {
   font-family: 'Nunito', sans-serif;
+  box-sizing: border-box;
   width: 100%;
+  padding: 3px;
+  border-radius: 5px;
+  outline: none;
   padding: 5px;
+  border: 1px solid lightgrey;
 }
 
 input[type="submit"], button {
   font-family: 'Nunito', sans-serif;
-  margin-left: 10px;
   padding: 7px 10px;
   border: none;
   border-radius: 5px;
   background-color: var(--blue);
   color: white;
+  cursor: pointer;
 }

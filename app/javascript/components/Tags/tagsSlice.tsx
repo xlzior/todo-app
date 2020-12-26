@@ -21,27 +21,27 @@ export const tagSlice = createSlice({
     builder.addCase(createTagThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       state.data.push(action.payload);
-    })
+    });
 
     // read tags
     builder.addCase(readTagsThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       state.data = state.data.concat(action.payload);
-    })
+    });
 
     // update tag
     builder.addCase(updateTagThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       const i = state.data.findIndex(tag => tag.id === action.payload.id);
       state.data[i] = action.payload;
-    })
+    });
 
     // delete tag
     builder.addCase(deleteTagThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       const i = state.data.findIndex(tag => tag.id === action.meta.arg);
       state.data.splice(i, 1);
-    })
+    });
   }
 })
 
@@ -50,7 +50,6 @@ export const tagsSelector = state => state.tags.data;
 export const tagsStatusSelector = state => state.tags.status;
 export const tagSelector = id => state => {
   const tags = tagsSelector(state);
-  console.log("tags", tags);
   return tags.find(tag => tag.id === id);
 }
 
