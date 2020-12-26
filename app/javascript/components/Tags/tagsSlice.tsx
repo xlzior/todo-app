@@ -32,14 +32,14 @@ export const tagSlice = createSlice({
     // update tag
     builder.addCase(updateTagThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
-      const i = state.data.findIndex(task => task.id === action.payload.id);
+      const i = state.data.findIndex(tag => tag.id === action.payload.id);
       state.data[i] = action.payload;
     })
 
     // delete tag
     builder.addCase(deleteTagThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
-      const i = state.data.findIndex(task => task.id === action.meta.arg);
+      const i = state.data.findIndex(tag => tag.id === action.meta.arg);
       state.data.splice(i, 1);
     })
   }
@@ -48,6 +48,11 @@ export const tagSlice = createSlice({
 // selectors
 export const tagsSelector = state => state.tags.data;
 export const tagsStatusSelector = state => state.tags.status;
+export const tagSelector = id => state => {
+  const tags = tagsSelector(state);
+  console.log("tags", tags);
+  return tags.find(tag => tag.id === id);
+}
 
 // reducer
 export default tagSlice.reducer;
