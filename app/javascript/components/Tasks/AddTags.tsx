@@ -18,16 +18,16 @@ export default function AddTags({ taskId }) {
 
   const [selection, setSelection] = React.useState(taskData.relationships.tags.data);
   const [isTagsOpen, setTagsOpen] = React.useState(false);
-  const toggleIsTagsOpen = () => setTagsOpen(prev => {
-    if (prev) { // dispatch thunk when tags popup is closed
-      dispatch(updateTaskTagsThunk({ taskId, newTags: selection }))
-    }
-    return !prev;
-  });
+  const openTags = () => setTagsOpen(true);
+  const closeTags = () => {
+    dispatch(updateTaskTagsThunk({ taskId, newTags: selection }))
+    setTagsOpen(false);
+  };
+
   return (
     <>
       <span ref={setRef} className="popper">
-        <HiTag className="action" onClick={toggleIsTagsOpen} />
+        <HiTag className="action" onClick={openTags} />
       </span>
       <span
         ref={setPopper}
@@ -36,10 +36,11 @@ export default function AddTags({ taskId }) {
       >
         <TagsSelect
           isTagsOpen={isTagsOpen}
+          closeTags={closeTags}
           selection={selection}
           setSelection={setSelection}
         />
       </span>
     </>
-  )
+  );
 }
