@@ -2,12 +2,12 @@ import { getJsonData, getToken } from './utils';
 
 // Tags CRUD
 
-export const readTags = () => fetch('/api/tags').then(getJsonData);
+export const readTags = () => fetch('/api/tags?include=tasks').then(getJsonData);
 
 // export const readTag = (id: number) => fetch(`/api/tags/${id}`).then(getJsonData);
 
 export const createTag = (data) => {
-  return fetch("/api/tags", {
+  return fetch("/api/tags?include=tasks", {
     method: "POST",
     credentials: "include",
     headers: {
@@ -18,8 +18,8 @@ export const createTag = (data) => {
   }).then(getJsonData);
 }
 
-export const updateTag = (data) => {
-  return fetch(`/api/tags/${data.id}`, {
+const updateTag = (data) => {
+  return fetch(`/api/tags/${data.id}?include=tasks`, {
     method: "PATCH",
     credentials: "include",
     headers: {
@@ -28,6 +28,14 @@ export const updateTag = (data) => {
     },
     body: JSON.stringify({ data }),
   }).then(getJsonData);
+}
+
+export const updateTagName = ({ id, newName }) => {
+  return updateTag({
+    id,
+    type: "tags",
+    attributes: { name: newName }
+  })
 }
 
 export const deleteTag = (id: number) => {

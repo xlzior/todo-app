@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { readTags, createTag, updateTag, deleteTag } from "../../../resources/api/tags"
+import { readTags, createTag, updateTagName, deleteTag } from "../../../resources/api/tags"
 import { SUCCESS } from '../sliceUtils';
 
 // thunks
 export const readTagsThunk = createAsyncThunk("tags/readTags", readTags);
 export const createTagThunk = createAsyncThunk("tags/createTag", createTag);
-export const updateTagThunk = createAsyncThunk("tags/updateTag", updateTag);
+export const updateTagNameThunk = createAsyncThunk("tags/updateTagName", updateTagName);
 export const deleteTagThunk = createAsyncThunk("tags/deleteTag", deleteTag);
 
 export const tagSlice = createSlice({
@@ -30,7 +30,7 @@ export const tagSlice = createSlice({
     });
 
     // update tag
-    builder.addCase(updateTagThunk.fulfilled, (state, action) => {
+    builder.addCase(updateTagNameThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       const i = state.data.findIndex(tag => tag.id === action.payload.id);
       state.data[i] = action.payload;

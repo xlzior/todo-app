@@ -29,8 +29,7 @@
   cursor: pointer;
 }
 
-li:hover > .action,
-.task:hover > .action {
+.item:hover .action {
   opacity: 1;
 }
 
