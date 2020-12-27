@@ -41,21 +41,5 @@ export const updateTagName = ({ id, newName }) => {
 export const deleteTag = (id: number) => {
   return fetch(`/api/tags/${id}`, {
     method: "DELETE",
-  }).then(() => { id });
-}
-
-// Task-Tag relationship
-
-export const addTagToTask = ({ taskId, tagId }) => {
-  return fetch(`/api/tasks/${taskId}/relationships/tags`, {
-    method: "POST",
-    body: JSON.stringify({ data: [{ type: "tags", id: tagId }] })
-  });
-}
-
-export const removeTagFromTask = ({ taskId, tagId }) => {
-  return fetch(`/api/tasks/${taskId}/relationships/tags`, {
-    method: "DELETE",
-    body: JSON.stringify({ data: [{ type: "tags", id: tagId }] })
-  });
+  }).then(() => id);
 }

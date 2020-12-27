@@ -43,3 +43,7 @@
   width: 20px;
   margin-right: 10px;
 }
+
+.popper {
+  line-height: 0;
+}

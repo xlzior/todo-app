@@ -1,18 +1,16 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { HiTrash, HiTag } from 'react-icons/hi';
+import { HiTrash } from 'react-icons/hi';
 
 import { toggleCompleteThunk, updateNameThunk, deleteTaskThunk } from './tasksSlice';
 import Tag from '../Tags/Tag';
-import TagsSelect from '../Tags/TagsSelect';
+import AddTags from './AddTags';
 
 export default function Task({ task, isEdit, setEdit }) {
   const dispatch = useDispatch();
-  const { attributes, id } = task;
   const tags = task.relationships.tags.data;
+  const { attributes, id } = task;
   const [newName, setNewName] = React.useState(attributes.task);
-  const [isTagsOpen, setTagsOpen] = React.useState(false);
-  const toggleIsTagsOpen = () => setTagsOpen(prev => !prev);
 
   const handleEdit = event => {
     event.preventDefault();
@@ -20,9 +18,6 @@ export default function Task({ task, isEdit, setEdit }) {
     setEdit(-1);
   }
 
-  const handleAddTags = tagIds => {
-    console.log(tagIds);
-  }
   return (
     <div className="task item">
       <input
@@ -44,9 +39,8 @@ export default function Task({ task, isEdit, setEdit }) {
             <span>{attributes.task}</span>
           </label> }
       { tags.map(({ id }) => <Tag key={id} id={id}/>) }
-      <HiTag className="action" onClick={toggleIsTagsOpen} />
+      <AddTags taskId={id} />
       <HiTrash className="action" onClick={() => dispatch(deleteTaskThunk(id))} />
-      <TagsSelect handleAddTags={handleAddTags} isTagsOpen={isTagsOpen} />
     </div>
   );
 }
