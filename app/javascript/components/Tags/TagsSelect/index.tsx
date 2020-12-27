@@ -4,25 +4,24 @@ import { useSelector } from 'react-redux';
 import { tagsSelector } from '../tagsSlice';
 import './index.css';
 
-const filterTags = (name, searchTerm) => {
+const isTagRelevant = (name, searchTerm) => {
   return name.toLowerCase().includes(searchTerm.toLowerCase());
 }
 
-export default function TagsSelect({ handleAddTags, isTagsOpen }) {
+export default function TagsSelect({ isTagsOpen, selection, setSelection }) {
   const allTags = useSelector(tagsSelector);
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [selection, setSelection] = React.useState([]);
 
   const filteredTags = searchTerm === ""
     ? allTags
-    : allTags.filter(tag => filterTags(tag.attributes.name, searchTerm));
+    : allTags.filter(tag => isTagRelevant(tag.attributes.name, searchTerm));
 
   const updateSelection = (event, id) => {
     const newValue = event.target.checked;
     if (newValue) {
-      setSelection(prev => prev.concat([id]));
+      setSelection(prev => prev.concat([{ id, type: "tags" }]));
     } else {
-      setSelection(prev => prev.filter(elem => elem !== id));
+      setSelection(prev => prev.filter(elem => elem.id !== id));
     }
   }
 
@@ -35,12 +34,18 @@ export default function TagsSelect({ handleAddTags, isTagsOpen }) {
         onChange={e => setSearchTerm(e.target.value)}
         placeholder="Filter tags"
       />
-      {filteredTags.map(({ id, attributes }) => (
+      { filteredTags.map(({ id, attributes }) => (
         <div className="tag-selection" key={id}>
-          <input type="checkbox" id={id} name={id} onChange={event => updateSelection(event, id)} />
+          <input
+            type="checkbox"
+            id={id}
+            name={id}
+            defaultChecked={selection.find(elem => elem.id === id)}
+            onChange={event => updateSelection(event, id)}
+          />
           <label htmlFor={id}>{attributes.name}</label>
         </div>
-      ))}
+      )) }
     </div>
   ) : null;
 }

@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { readTasks, createTask, toggleComplete, updateName, deleteTask } from "../../../resources/api/tasks";
-import { addTagToTask, removeTagFromTask } from "../../../resources/api/tags";
+import {
+  readTasks,
+  createTask,
+  toggleComplete,
+  updateName,
+  deleteTask,
+  updateTaskTags
+} from "../../../resources/api/tasks";
 import { SUCCESS, LOADING, ERROR } from '../sliceUtils';
 
 // thunks
@@ -10,8 +16,7 @@ export const toggleCompleteThunk = createAsyncThunk('tasks/completeTask', toggle
 export const updateNameThunk = createAsyncThunk('tasks/updateName', updateName);
 export const deleteTaskThunk = createAsyncThunk('tasks/deleteTask', deleteTask);
 
-export const addTagToTaskThunk = createAsyncThunk("tags/addTagToTask", addTagToTask);
-export const removeTagFromTaskThunk = createAsyncThunk("tags/removeTagFromTask", removeTagFromTask);
+export const updateTaskTagsThunk = createAsyncThunk("tags/updateTaskTags", updateTaskTags);
 
 const updateTask = (state, action) => {
   state.status = SUCCESS;
@@ -60,14 +65,10 @@ export const taskSlice = createSlice({
     });
 
     // add new task-tag relationship
-    builder.addCase(addTagToTaskThunk.fulfilled, (state, action) => {
+    builder.addCase(updateTaskTagsThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
-      // TODO: update redux task's tags
-    })
-
-    builder.addCase(removeTagFromTaskThunk.fulfilled, (state, action) => {
-      state.status = SUCCESS;
-      // TODO: update redux task's tags
+      const i = state.data.findIndex(task => task.id === action.meta.arg.taskId);
+      state.data[i].relationships.tags.data = action.meta.arg.newTags;
     })
   }
 });
@@ -77,6 +78,10 @@ export const taskSlice = createSlice({
 // selectors
 export const tasksSelector = state => state.tasks.data;
 export const taskStatusSelector = state => state.tasks.status;
+export const taskSelector = id => state => {
+  const tasks = tasksSelector(state);
+  return tasks.find(task => task.id === id);
+}
 
 // reducer
 export default taskSlice.reducer;

@@ -10,8 +10,8 @@ export default function ByTags() {
   const { id } = useParams();
   const tagData = useSelector(tagSelector(id));
   return (
-    <Page title={tagData.attributes.name}>
+    <Page title={tagData?.attributes.name}>
       <p>Hi</p>
     </Page>
-  )
+  );
 }

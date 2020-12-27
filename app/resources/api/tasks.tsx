@@ -49,3 +49,17 @@ export const deleteTask = (id: number) => {
     method: "DELETE",
   }).then(() => { id });
 }
+
+// Task-Tag relationship
+
+export const updateTaskTags = ({ taskId, newTags }) => {
+  return fetch(`/api/tasks/${taskId}/relationships/tags`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/vnd.api+json",
+      "X-CSRF-Token": getToken()
+    },
+    body: JSON.stringify({ data: newTags }),
+  }).then(() => ({ taskId, newTags }));
+}
