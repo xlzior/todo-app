@@ -11,7 +11,7 @@ export default function Tag({ id }) {
   return (
     <Link to={`/tags/${id}`} className="tag">
       <HiTag />
-      <span>{tagData.attributes.name}</span>
+      <span>{tagData?.attributes.name}</span>
     </Link>
   )
 }

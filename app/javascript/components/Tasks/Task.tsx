@@ -24,7 +24,7 @@ export default function Task({ task, isEdit, setEdit }) {
     console.log(tagIds);
   }
   return (
-    <div className="task">
+    <div className="task item">
       <input
         type="checkbox"
         name={attributes.task}
@@ -43,7 +43,7 @@ export default function Task({ task, isEdit, setEdit }) {
         : <label htmlFor={attributes.task} onClick={() => setEdit(id)}>
             <span>{attributes.task}</span>
           </label> }
-      {tags.map(({ id }) => <Tag key={id} id={id}/>)}
+      { tags.map(({ id }) => <Tag key={id} id={id}/>) }
       <HiTag className="action" onClick={toggleIsTagsOpen} />
       <HiTrash className="action" onClick={() => dispatch(deleteTaskThunk(id))} />
       <TagsSelect handleAddTags={handleAddTags} isTagsOpen={isTagsOpen} />
