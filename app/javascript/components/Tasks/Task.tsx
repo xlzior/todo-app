@@ -44,8 +44,8 @@ export default function Task({ task, isEdit, setEdit }) {
             <span>{attributes.task}</span>
           </label> }
       {tags.map(({ id }) => <Tag key={id} id={id}/>)}
-      <HiTag className="add-tag" onClick={toggleIsTagsOpen} />
-      <HiTrash className="delete" onClick={() => dispatch(deleteTaskThunk(id))} />
+      <HiTag className="action" onClick={toggleIsTagsOpen} />
+      <HiTrash className="action" onClick={() => dispatch(deleteTaskThunk(id))} />
       <TagsSelect handleAddTags={handleAddTags} isTagsOpen={isTagsOpen} />
     </div>
   );

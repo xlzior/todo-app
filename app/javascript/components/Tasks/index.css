@@ -19,27 +19,27 @@
 
 .task > label {
   margin-right: 10px;
+  cursor: text;
 }
 
-.task > .delete,
-.task > .add-tag {
-  margin-left: 8px;
+.action {
+  margin-right: 8px;
   color: #AAAAAA;
   opacity: 0;
   cursor: pointer;
 }
 
-.task:hover > .delete,
-.task:hover > .add-tag {
+li:hover > .action,
+.task:hover > .action {
   opacity: 1;
 }
 
-.add-task {
+.add-form {
   display: flex;
   align-items: center;
 }
 
-.add-task > svg {
+.add-form > svg {
   height: 20px;
   width: 20px;
   margin-right: 10px;
