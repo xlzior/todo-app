@@ -1,25 +1,23 @@
 import * as React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+
+
 import { useSelector, useDispatch } from 'react-redux';
 
-import TaskList from './Tasks/TaskList';
 import { taskStatusSelector, readTasksThunk } from './Tasks/tasksSlice';
 import { tagsStatusSelector, readTagsThunk } from './Tags/tagsSlice';
 
-import TagsPanel from './Tags/TagsPanel';
-import Page from './Page';
+import Tasks from './Tasks';
+import ByTags from './Tags/ByTags';
 
-interface Task {
-  task: string,
-  completed: boolean
-}
-
-export default function Tasks() {
+export default function App() {
   const dispatch = useDispatch();
   const taskStatus = useSelector(taskStatusSelector);
   const tagStatus = useSelector(tagsStatusSelector);
-
-  // const [isPanelOpen, setPanelOpen] = React.useState(false);
-  // TODO: button to hide and show tags panel
 
   React.useEffect(() => { // tasks
     if (taskStatus === 'idle') dispatch(readTasksThunk());
@@ -30,11 +28,11 @@ export default function Tasks() {
   }, [tagStatus, dispatch]);
 
   return (
-    <Page title="Tasks">
-      <main>
-        <TaskList />
-        <TagsPanel />
-      </main>
-    </Page>
-  )
+    <Router>
+      <Switch>
+        <Route path="/tags/:id"><ByTags /></Route>
+        <Route exact path="/"><Tasks /></Route>
+      </Switch>
+    </Router>
+  );
 }

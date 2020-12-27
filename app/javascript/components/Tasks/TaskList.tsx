@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
 
 import Task from './Task';
 import AddTask from './AddTask';
-import { tasksSelector } from './tasksSlice';
 import './index.css';
 
-export default function TaskList() {
-  const tasks = useSelector(tasksSelector)
+export default function TaskList({ tasks }) {
   const [editId, setEditId] = React.useState(-1);
   return (
     <div className="task-list">
