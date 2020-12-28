@@ -47,7 +47,7 @@ export const toggleComplete = ({ id, type, attributes }) => {
 export const deleteTask = (id: number) => {
   return fetch(`/api/tasks/${id}`, {
     method: "DELETE",
-  }).then(() => { id });
+  }).then(() => id);
 }
 
 // Task-Tag relationship

@@ -8,10 +8,11 @@ export default function AddForm({ actionCreator, item }) {
   const dispatch = useDispatch();
   const handleSubmit = event => {
     event.preventDefault();
-    if (newName.length > 0) {
+    if (newName.trim().length > 0) {
       dispatch(actionCreator(newName));
     }
     setNewName("");
+    setAdd(false);
   };
 
   if (isAdd) {
