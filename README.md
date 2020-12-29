@@ -3,7 +3,10 @@
 ## CVWO Assignment
 
 Name: Lye Wen Jun
+
 Matriculation number: A0222994W
+
+Submissions (mid/final) can be found in the `submissions/mid/` folder.
 
 ## Application
 
