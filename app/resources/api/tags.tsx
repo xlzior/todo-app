@@ -1,33 +1,20 @@
-import { getJsonData, getToken } from './utils';
+import { get, post, patch, del } from './utils';
 
 // Tags CRUD
 
-export const readTags = () => fetch('/api/tags?include=tasks').then(getJsonData);
+export const readTags = () => get('/api/tags?include=tasks');
 
-// export const readTag = (id: number) => fetch(`/api/tags/${id}`).then(getJsonData);
+// export const readTag = (id: number) => get(`/api/tags/${id}`);
 
-export const createTag = (data) => {
-  return fetch("/api/tags?include=tasks", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/vnd.api+json",
-      "X-CSRF-Token": getToken()
-    },
-    body: JSON.stringify({ data })
-  }).then(getJsonData);
+export const createTag = (newName: string) => {
+  return post("/api/tags?include=tasks", {
+    type: "tags",
+    attributes: { name: newName }
+  });
 }
 
 const updateTag = (data) => {
-  return fetch(`/api/tags/${data.id}?include=tasks`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/vnd.api+json",
-      "X-CSRF-Token": getToken()
-    },
-    body: JSON.stringify({ data }),
-  }).then(getJsonData);
+  return patch(`/api/tags/${data.id}?include=tasks`, data);
 }
 
 export const updateTagName = ({ id, newName }) => {
@@ -38,8 +25,4 @@ export const updateTagName = ({ id, newName }) => {
   })
 }
 
-export const deleteTag = (id: number) => {
-  return fetch(`/api/tags/${id}`, {
-    method: "DELETE",
-  }).then(() => id);
-}
+export const deleteTag = (id: string) => del(`/api/tags/${id}`, id);

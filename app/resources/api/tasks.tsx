@@ -1,38 +1,20 @@
-import { getJsonData, getToken } from './utils';
+import { get, post, patch, del } from './utils';
 
-export const readTasks = () => fetch('/api/tasks?include=tags').then(getJsonData);
+// Tasks CRUD
 
-// export const readTask = (id: number) => fetch(`/api/tasks/${id}`).then(getJsonData);
+export const readTasks = () => get('/api/tasks?include=tags');
 
-export const createTask = async (newName: string) => {
-  const response = await fetch("/api/tasks?include=tags", {
-    method: "POST",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/vnd.api+json",
-      "X-CSRF-Token": getToken()
-    },
-    body: JSON.stringify({
-      data: {
-        type: "tasks",
-        attributes: { task: newName, completed: false }
-      }
-    })
+// export const readTask = (id: number) => get(`/api/tasks/${id}`);
+
+export const createTask = (newName: string) => {
+  return post("/api/tasks?include=tags", {
+    type: "tasks",
+    attributes: { task: newName, completed: false }
   });
-  return getJsonData(response);
 }
 
-const updateTask = async (data) => {
-  const response = await fetch(`/api/tasks/${data.id}?include=tags`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/vnd.api+json",
-      "X-CSRF-Token": getToken()
-    },
-    body: JSON.stringify({ data }),
-  });
-  return getJsonData(response);
+const updateTask = (data) => {
+  return patch(`/api/tasks/${data.id}?include=tags`, data);
 }
 
 export const updateName = ({ task: {id, type}, newName }) => {
@@ -51,24 +33,10 @@ export const toggleComplete = ({ id, type, attributes }) => {
   });
 }
 
-export const deleteTask = async (id: number) => {
-  await fetch(`/api/tasks/${id}`, {
-    method: "DELETE",
-  });
-  return id;
-}
+export const deleteTask = (id: number) =>  del(`/api/tasks/${id}`, id);
 
 // Task-Tag relationship
 
 export const updateTaskTags = async ({ taskId, newTags }) => {
-  await fetch(`/api/tasks/${taskId}/relationships/tags`, {
-    method: "PATCH",
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/vnd.api+json",
-      "X-CSRF-Token": getToken()
-    },
-    body: JSON.stringify({ data: newTags }),
-  });
-  return ({ taskId, newTags });
+  return patch(`/api/tasks/${taskId}/relationships/tags`, newTags, { taskId, newTags });
 }
