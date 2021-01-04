@@ -4,7 +4,7 @@ import Task from './Task';
 import AddTask from './AddTask';
 import './index.css';
 
-export default function TaskList({ tasks }) {
+export default function TaskList({ tasks, withTag = null }) {
   const [editId, setEditId] = React.useState(-1);
   return (
     <div className="task-list">
@@ -15,7 +15,7 @@ export default function TaskList({ tasks }) {
           isEdit={editId === task.id}
           setEdit={setEditId}
         />) }
-      <AddTask />
+      <AddTask withTag={withTag} />
     </div>
   );
 }

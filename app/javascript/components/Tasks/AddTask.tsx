@@ -1,15 +1,17 @@
 import * as React from 'react';
 
 import AddForm from '../AddForm';
-import { createTaskThunk } from './tasksSlice';
+import { createTaskThunk, createTaskWithTagThunk } from './tasksSlice';
 
-export default function AddTask() {
+export default function AddTask({ withTag = null }) {
+  const actionCreator = newName => {
+    return withTag ?
+      createTaskWithTagThunk(newName, withTag) :
+      createTaskThunk(newName);
+  }
   return (
     <AddForm
-      actionCreator={newName => createTaskThunk({
-        type: "tasks",
-        attributes: { task: newName, completed: false }
-      })}
+      actionCreator={actionCreator}
       item="task"
     />
   )

@@ -8,6 +8,7 @@ import {
   updateTaskTags
 } from "../../../resources/api/tasks";
 import { SUCCESS, LOADING, ERROR } from '../sliceUtils';
+import { readTags } from "../../../resources/api/tags";
 
 // thunks
 export const readTasksThunk = createAsyncThunk('tasks/readTasks', readTasks);
@@ -17,6 +18,14 @@ export const updateNameThunk = createAsyncThunk('tasks/updateName', updateName);
 export const deleteTaskThunk = createAsyncThunk('tasks/deleteTask', deleteTask);
 
 export const updateTaskTagsThunk = createAsyncThunk("tags/updateTaskTags", updateTaskTags);
+
+export const createTaskWithTagThunk = (taskName: string, tagId: string) => async (dispatch) => {
+  const taskObject = await dispatch(createTaskThunk(taskName));
+  return dispatch(updateTaskTagsThunk({
+    taskId: taskObject.payload.id,
+    newTags: [{ id: tagId, type: "tags" }],
+  }));
+}
 
 const updateTask = (state, action) => {
   state.status = SUCCESS;
@@ -64,12 +73,12 @@ export const taskSlice = createSlice({
       state.data.splice(i, 1);
     });
 
-    // add new task-tag relationship
+    // update task-tag relationship -> update tasks's tags
     builder.addCase(updateTaskTagsThunk.fulfilled, (state, action) => {
       state.status = SUCCESS;
       const i = state.data.findIndex(task => task.id === action.meta.arg.taskId);
       state.data[i].relationships.tags.data = action.meta.arg.newTags;
-    })
+    });
   }
 });
 
