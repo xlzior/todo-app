@@ -1,26 +1,12 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 
+import { filterForRelevant, useOnClickOutside } from '../../utils';
 import { tagsSelector } from '../tagsSlice';
 import './index.css';
 
-const isTagRelevant = (name, searchTerm) => {
-  return name.toLowerCase().includes(searchTerm.toLowerCase());
-}
-
-function useOnClickOutside(ref, fn, deps) {
-  React.useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        fn();
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref, ...deps]);
+const getTagName = (tag: { attributes: { name: string } }) => {
+  return tag.attributes.name;
 }
 
 export default function TagsSelect({ isTagsOpen, closeTags, selection, setSelection }) {
@@ -29,15 +15,13 @@ export default function TagsSelect({ isTagsOpen, closeTags, selection, setSelect
   const allTags = useSelector(tagsSelector);
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  const filteredTags = searchTerm === ""
-    ? allTags
-    : allTags.filter(tag => isTagRelevant(tag.attributes.name, searchTerm));
+  const filteredTags = filterForRelevant(allTags, getTagName, searchTerm);
 
-  const updateSelection = (event, id) => {
+  const updateSelection = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
     if (event.target.checked) {
       setSelection(prev => prev.concat([{ id, type: "tags" }]));
     } else {
-      setSelection(prev => prev.filter(elem => elem.id !== id));
+      setSelection(prev => prev.filter((elem: { id: string }) => elem.id !== id));
     }
   }
 

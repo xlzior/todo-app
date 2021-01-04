@@ -49,10 +49,10 @@ input[type="text"] {
   font-family: 'Nunito', sans-serif;
   box-sizing: border-box;
   width: 100%;
-  padding: 3px;
+  padding: 5px;
+  margin-bottom: 5px;
   border-radius: 5px;
   outline: none;
-  padding: 5px;
   border: 1px solid lightgrey;
 }
 
