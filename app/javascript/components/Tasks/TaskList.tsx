@@ -23,10 +23,15 @@ export default function TaskList({ tasks, withTag = null }) {
     />
   );
 
+  const tasksToDisplay = filterForRelevant(tasks, getTaskName, searchTerm).map(mapToTask);
+
   return (
     <div className="task-list">
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      { filterForRelevant(tasks, getTaskName, searchTerm).map(mapToTask) }
+      { tasksToDisplay }
+      { tasksToDisplay.length === 0
+        ? <p>Nothing to see here! {searchTerm === "" ? "Let's add some tasks." : "Try a different search term."}</p>
+        : null }
       <AddTask withTag={withTag} />
     </div>
   );
