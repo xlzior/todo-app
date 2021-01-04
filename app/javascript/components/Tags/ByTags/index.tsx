@@ -15,7 +15,7 @@ export default function ByTags() {
   const filledTasks = useDataFiller(rawTasks);
   return (
     <Page title={tagData?.attributes.name}>
-      <TaskList tasks={filledTasks} />
+      <TaskList tasks={filledTasks} withTag={id} />
     </Page>
   );
 }

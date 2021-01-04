@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { readTags, createTag, updateTagName, deleteTag } from "../../../resources/api/tags"
 import { SUCCESS } from '../sliceUtils';
+import { updateTaskTagsThunk } from "../Tasks/tasksSlice";
 
 // thunks
 export const readTagsThunk = createAsyncThunk("tags/readTags", readTags);
@@ -41,6 +42,24 @@ export const tagSlice = createSlice({
       state.status = SUCCESS;
       const i = state.data.findIndex(tag => tag.id === action.meta.arg);
       state.data.splice(i, 1);
+    });
+
+    // update task-tag relationship -> update tag's tasks
+    builder.addCase(updateTaskTagsThunk.fulfilled, (state, action) => {
+      state.status = SUCCESS;
+      const { taskId, newTags } = action.meta.arg;
+      state.data.forEach(tag => {
+        const taskPrevHadTag = tag.relationships.tasks.data.find(task => task.id === taskId);
+        const taskNowHasTag = newTags.find(newTag => newTag.id === tag.id);
+        if (!taskPrevHadTag && taskNowHasTag) { // add task to tag
+          tag.relationships.tasks.data.push({ type: "tasks", id: taskId });
+        }
+        if (taskPrevHadTag && !taskNowHasTag) { // remove task from tag
+          tag.relationships.tasks.data = tag.relationships.tasks.data.filter(
+            ({ id }) => id !== taskId
+          );
+        }
+      })
     });
   }
 })
