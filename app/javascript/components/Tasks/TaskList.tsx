@@ -5,16 +5,22 @@ import Task from './Task';
 import AddTask from './AddTask';
 import SearchBar from './SearchBar';
 import './index.css';
+import { FullTask } from '../types';
 
-const getTaskName = (task: { attributes: { task: string } }) => {
+type TaskListProps = {
+  tasks: FullTask[],
+  withTag?: string,
+}
+
+const getTaskName = (task: FullTask) => {
   return task.attributes.task;
 };
 
-export default function TaskList({ tasks, withTag = null }) {
-  const [editId, setEditId] = React.useState(-1);
+export default function TaskList({ tasks, withTag = null }: TaskListProps) {
+  const [editId, setEditId] = React.useState("");
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  const mapToTask = task => (
+  const mapToTask = (task: FullTask) => (
     <Task
       key={task.id}
       task={task}

@@ -4,7 +4,7 @@ import { get, post, patch, del } from './utils';
 
 export const readTags = () => get('/api/tags?include=tasks');
 
-// export const readTag = (id: number) => get(`/api/tags/${id}`);
+// export const readTag = (id: string) => get(`/api/tags/${id}`);
 
 export const createTag = (newName: string) => {
   return post("/api/tags?include=tasks", {

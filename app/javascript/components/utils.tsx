@@ -4,7 +4,7 @@ const isNameRelevant = (searchTerm: string) => (name: string) => {
   return name.toLowerCase().includes(searchTerm.toLowerCase());
 }
 
-export const filterForRelevant = (array, getName, searchTerm: string) => {
+export const filterForRelevant = (array: any[], getName, searchTerm: string) => {
   if (searchTerm === "") {
     return array;
   } else {

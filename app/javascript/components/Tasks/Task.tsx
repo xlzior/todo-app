@@ -5,8 +5,15 @@ import { HiTrash } from 'react-icons/hi';
 import { toggleCompleteThunk, updateNameThunk, deleteTaskThunk } from './tasksSlice';
 import Tag from '../Tags/Tag';
 import AddTags from './AddTags';
+import { FullTask } from '../types';
 
-export default function Task({ task, isEdit, setEdit }) {
+type TaskProps = {
+  task: FullTask,
+  isEdit: boolean,
+  setEdit: (id: string) => void
+}
+
+export default function Task({ task, isEdit, setEdit }: TaskProps) {
   const dispatch = useDispatch();
   const tags = task.relationships.tags.data;
   const { attributes, id } = task;
@@ -15,7 +22,7 @@ export default function Task({ task, isEdit, setEdit }) {
   const handleEdit = event => {
     event.preventDefault();
     dispatch(updateNameThunk({ task, newName }));
-    setEdit(-1);
+    setEdit("");
   }
 
   return (

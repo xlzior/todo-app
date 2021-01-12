@@ -8,7 +8,6 @@ import {
   updateTaskTags
 } from "../../../resources/api/tasks";
 import { SUCCESS, LOADING, ERROR } from '../sliceUtils';
-import { readTags } from "../../../resources/api/tags";
 
 // thunks
 export const readTasksThunk = createAsyncThunk('tasks/readTasks', readTasks);

@@ -4,7 +4,7 @@ import { get, post, patch, del } from './utils';
 
 export const readTasks = () => get('/api/tasks?include=tags');
 
-// export const readTask = (id: number) => get(`/api/tasks/${id}`);
+// export const readTask = (id: string) => get(`/api/tasks/${id}`);
 
 export const createTask = (newName: string) => {
   return post("/api/tasks?include=tags", {
@@ -33,7 +33,7 @@ export const toggleComplete = ({ id, type, attributes }) => {
   });
 }
 
-export const deleteTask = (id: number) =>  del(`/api/tasks/${id}`, id);
+export const deleteTask = (id: string) =>  del(`/api/tasks/${id}`, id);
 
 // Task-Tag relationship
 

@@ -6,13 +6,14 @@ import Page from '../../Page';
 import TaskList from '../../Tasks/TaskList';
 import useDataFiller from '../../Tasks/useDataFiller';
 import { tagSelector } from '../tagsSlice';
-import './index.css';
+import { FullTask } from '../../types';
 
 export default function ByTags() {
   const { id } = useParams();
   const tagData = useSelector(tagSelector(id));
-  const rawTasks = tagData?.relationships.tasks.data;
+  const rawTasks: FullTask[] = tagData?.relationships.tasks.data;
   const filledTasks = useDataFiller(rawTasks);
+
   return (
     <Page title={tagData?.attributes.name}>
       <TaskList tasks={filledTasks} withTag={id} />

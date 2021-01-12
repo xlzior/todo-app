@@ -4,8 +4,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-
-
 import { useSelector, useDispatch } from 'react-redux';
 
 import { taskStatusSelector, readTasksThunk } from './Tasks/tasksSlice';

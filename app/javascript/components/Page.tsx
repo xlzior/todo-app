@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-export default function Page({ title, children }) {
+type PageProps = {
+  title: string,
+  children: React.ReactNode
+}
+
+export default function Page({ title, children }: PageProps) {
   return (
     <div className="App">
       <div className="page-title">
