@@ -4,7 +4,6 @@ import { filterForRelevant } from '../utils';
 import Task from './Task';
 import AddTask from './AddTask';
 import SearchBar from './SearchBar';
-import './index.css';
 import { FullTask } from '../types';
 
 type TaskListProps = {

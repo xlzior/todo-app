@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { tagsSelector } from '../tagsSlice';
 import EditableTag from '../Tag/EditableTag';
 import AddTag from './AddTag';
-import './index.css';
 
 export default function TagsPanel() {
   const [editId, setEditId] = React.useState(-1);

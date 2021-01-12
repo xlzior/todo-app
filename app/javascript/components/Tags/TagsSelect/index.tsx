@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import { filterForRelevant, useOnClickOutside } from '../../utils';
 import { tagsSelector } from '../tagsSlice';
-import './index.css';
 
 const getTagName = (tag: { attributes: { name: string } }) => {
   return tag.attributes.name;

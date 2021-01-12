@@ -14,7 +14,16 @@
  *= require_self
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');  
+@font-face {
+  font-family: 'Nunito';
+  src: url('Nunito-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('Nunito-Bold.ttf');
+  font-weight: bold;
+}
 
 :root {
   --blue: #0068CD;
