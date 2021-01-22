@@ -10,5 +10,7 @@ Submissions (mid/final) can be found in the `submissions/` folder.
 
 ## Application
 
-Run the app using `foreman start -f Procfile.dev`.
+Application is deployed at: https://warm-meadow-76596.herokuapp.com/ 
+(initial load may take a while as the dyno needs to wake up)
 
+Run the app locally using `foreman start -f Procfile.dev`.
